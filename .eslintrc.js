@@ -4,7 +4,7 @@ module.exports = {
         "commonjs": true,
         "es2021": true
     },
-    extends: ['plugin:node/recommended'],
+    extends: ["eslint:recommended", 'plugin:node/recommended'],
     "overrides": [
         {
             "env": {

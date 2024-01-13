@@ -1,4 +1,4 @@
-const mongoose = require('../connection/db')
+const mongoose = require('../../connection/db')
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({

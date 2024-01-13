@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const logger = require('../utils/logger');
 
 var auth = {
     validateToken: async function (req, res, next) {
@@ -18,8 +19,7 @@ var auth = {
 
             next();
         } catch (error) {
-            console.error(error);
-            // console.log('Error Occureddd ---- ' + error)
+            logger.error("catche error auth token valiation:",error);
 
             if (error.name === "TokenExpiredError") {
                 return res.status(403).json({

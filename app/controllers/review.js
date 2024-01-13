@@ -1,4 +1,6 @@
 const Review = require('../models/review')
+const { serverError } = require('../utils/constants')
+const logger = require('../utils/logger')
 const util = require('../utils/utils')
 
 var controller = {
@@ -7,17 +9,15 @@ var controller = {
             let { bookId, reviewText="", rating } = req.body
             let { email } = req.decode
 
-            if(!bookId || !rating) throw { message: "Parameters Missing" }
-            if(!util.isValidObjectId(bookId)) throw { message: "Invalid Book Id" }
+            if(!bookId || !rating) return res.json({status: 0, message: "Parameters Missing"});
+            if(!util.isValidObjectId(bookId)) return res.json({status: 0, message: "Invalid Book Id"});
             
             const review = new Review({ book: bookId, user: email, reviewText, rating, created: Date.now(), status: 1});
-            let save = await review.save()
+            await review.save()
             return res.json({status: 1, message: "Review Saved"});
         } catch (error) {
-            console.error(error);
-            let mesg = 'Something Went Wrong !!!'
-            if(error.message) mesg = error.message
-            return res.json({status: 0, message: mesg});
+            logger.error("CATCHED error adding book review",error);
+            return res.json({error: serverError});
         }
     },
     getBookReviews: async function(req, res) {
@@ -29,10 +29,8 @@ var controller = {
             let reviews = await Review.find({ book: bookId })
             return res.json({status: 1, reviews});
         } catch (error) {
-            console.error(error);
-            let mesg = 'Something Went Wrong !!!'
-            if(error.message) mesg = error.message
-            return res.json({status: 0, message: mesg});
+            logger.error("CATCHED error getting book review",error);
+            return res.json({error: serverError});
         }
     }
 }

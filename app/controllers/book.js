@@ -1,4 +1,6 @@
-const Book = require('../models/book')
+const Book = require('../models/book');
+const logger = require('../utils/logger');
+const { serverError } = require('../utils/constants');
 
 var controller = {
     searchBooks: async function(req, res) {
@@ -56,10 +58,8 @@ var controller = {
 
             return res.json({status: 1, headers, rows: books, totalPages, page, totalCount, pageSize})
         } catch (error) {
-            console.error(error);
-            let mesg = 'Something Went Wrong !!!'
-            if(error.message) mesg = error.message 
-            return res.json({message: mesg, status: 0});
+            logger.error("CATCHED err search books",error);
+            return res.status(500).json({error: serverError});
         }
     }
 }
