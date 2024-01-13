@@ -2,7 +2,8 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const googleConf = require('../config/config').get('oauth_google');
 const { PROVIDER_LOGIN_CALLBACK_URL } = require('../app/utils/constants');
-const userUtil = require('../app/utils/userUtils')
+const userUtil = require('../app/utils/userUtils');
+const logger = require('../app/utils/logger');
 
 passport.use(new GoogleStrategy({
     clientID: googleConf.client_id,
@@ -20,7 +21,7 @@ passport.use(new GoogleStrategy({
     }
     let userInf = {email, providerId: user.id};
 
-    console.log("USER LOGGED IN THROUGH GOOGLE: ---- ",userInf);
+    logger.info("USER LOGGED IN THROUGH GOOGLE: ---- ",userInf);
     next(null, userInf);
 }));
 

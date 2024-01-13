@@ -81,7 +81,7 @@ var controller = {
             let provider = req.params.provider;
             if(!provider) throw new Error("Unknown provider in loginUserCallbackWithProvider " + provider);
     
-            passport.authenticate(provider, async (err, user) => {
+            passport.authenticate(provider, { failureRedirect: '/login', successRedirect: '/' }, async (err, user) => {
                 try {
                     if (err) {
                         logger.error("loginUserCallbackWithProvider authenticate error",err);
