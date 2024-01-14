@@ -1,9 +1,9 @@
-const express = require('express');
-const router = express.Router();
-const reviewController = require('../controllers/review');
-const middleware = require('../middleware/auth')
+import { Router } from 'express';
+const router = Router();
+import review from '../controllers/review.js';
+import auth from '../middleware/auth.js';
 
-router.post('/api/reviews/post', middleware.validateToken, reviewController.addBookReviews);
-router.get('/api/reviews/:bookId', reviewController.getBookReviews);
+router.post('/api/reviews/post', auth.validateToken, review.addBookReviews);
+router.get('/api/reviews/:bookId', review.getBookReviews);
 
-module.exports = router;
+export default router;

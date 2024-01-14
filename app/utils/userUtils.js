@@ -1,4 +1,4 @@
-const User = require('../models/user');
+import User from '../models/user.js';
 
 var userUtil = {
     getUser: (cond) => User.findOne(cond),
@@ -8,4 +8,4 @@ var userUtil = {
     }
 }
 
-module.exports = userUtil;
+export default userUtil;

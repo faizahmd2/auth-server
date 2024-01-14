@@ -1,5 +1,5 @@
-const jwt = require('jsonwebtoken');
-const config = require('../../config/config')
+import jwt from 'jsonwebtoken';
+import config from '../../config/config.js';
 
 const options = {
   expiresIn: config.get("JWT_EXPIRY"),
@@ -14,4 +14,4 @@ async function generateJWT(tokenData) {
   }
 }
 
-module.exports = generateJWT;
+export default generateJWT;

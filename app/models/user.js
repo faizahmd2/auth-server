@@ -1,5 +1,5 @@
-const mongoose = require('../../connection/db')
-const Schema = mongoose.Schema;
+import db from '../../connection/db.js';
+const Schema = db.Schema;
 
 const userSchema = new Schema({
   username: String,
@@ -14,6 +14,6 @@ const userSchema = new Schema({
   modified: { type: Date, default: Date.now }
 });
 
-const User = mongoose.model('users', userSchema);
+const User = db.model('users', userSchema);
 
-module.exports = User;
+export default User;

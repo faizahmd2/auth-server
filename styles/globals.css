@@ -1,0 +1,11 @@
+a {
+    text-decoration: none;
+}
+
+.book_card .main-card:hover {
+    transform: scale(1.05);
+    transition: all 280ms ease-in-out;
+    background-color: rgb(185, 216, 243);
+}
+
+

@@ -6,4 +6,4 @@ var util = {
     }
 }
 
-module.exports = util
+export default util

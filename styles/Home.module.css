@@ -1,0 +1,17 @@
+.search_container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.book_card_parent {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.book_card {
+    text-decoration: none;
+}

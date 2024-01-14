@@ -1,10 +1,9 @@
-const bcrypt = require('bcrypt')
-const passport = require('passport');
-const jwtToken = require('../middleware/generateJWT');
-const { LOGIN_PASSWROD_SALT_ROUND, serverError } = require('../utils/constants');
-const provider_login = require('../../config/config').get('provider_login');
-const userUtil = require('../utils/userUtils');
-const logger = require('../utils/logger');
+import { hashSync, compareSync } from 'bcrypt';
+import passport from 'passport';
+import jwtToken from '../middleware/generateJWT.js';
+import { LOGIN_PASSWROD_SALT_ROUND, serverError, provider_login } from '../utils/constants.js';
+import userUtil from '../utils/userUtils.js';
+import logger from '../utils/logger.js';
 
 var controller = {
     register: async function(req, res) {
@@ -17,7 +16,7 @@ var controller = {
             
             if(userExist) return res.json({ status: 0, message: "User already Registered" });
 
-            const passwordHash = bcrypt.hashSync(password, LOGIN_PASSWROD_SALT_ROUND);
+            const passwordHash = hashSync(password, LOGIN_PASSWROD_SALT_ROUND);
 
             let newUser = {
                 username,  
@@ -46,7 +45,7 @@ var controller = {
             
             if(!user) return res.json({status: 0, message: 'User not registered'});
 
-            let comparePassword = bcrypt.compareSync(password, user.password);
+            let comparePassword = compareSync(password, user.password);
             if (!comparePassword) return res.json({status: 0, message: 'Invalid Password'});
             // generate token and send to user
 
@@ -79,6 +78,7 @@ var controller = {
     loginUserCallbackWithProvider: async function(req, res, next) {
         try {
             let provider = req.params.provider;
+            console.log("HERE",provider)
             if(!provider) throw new Error("Unknown provider in loginUserCallbackWithProvider " + provider);
     
             passport.authenticate(provider, { failureRedirect: '/login', successRedirect: '/' }, async (err, user) => {
@@ -96,7 +96,8 @@ var controller = {
         
                     res.cookie('token', token, { maxAge: 3600000, httpOnly: true });
         
-                    return res.json({status: 1, message: 'Logged In Successfully', token});
+                    // return res.json({status: 1, message: 'Logged In Successfully', token});
+                    return res.redirect("/home");
                 } catch (error) {
                     logger.error("CATCHE login callback: ",error);
                     return res.status(500).json({ status: 0, error: serverError });
@@ -109,4 +110,4 @@ var controller = {
     }
 }
 
-module.exports = controller;
+export default controller;

@@ -5,11 +5,12 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.js",
+    "dev": "node server.js",
     "lint": "eslint ."
   },
   "author": "Faiz Ahmad",
   "license": "ISC",
+  "type": "module",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
@@ -20,13 +21,17 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.6.2",
     "nconf": "^0.12.1",
+    "next": "^14.0.4",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
     "path": "^0.12.7",
     "pino": "^8.17.2",
-    "pino-pretty": "^10.3.1"
+    "pino-pretty": "^10.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.23.3",
     "eslint": "^8.56.0",
     "eslint-plugin-node": "^11.1.0"
   }

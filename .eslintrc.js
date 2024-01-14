@@ -4,7 +4,8 @@ module.exports = {
         "commonjs": true,
         "es2021": true
     },
-    extends: ["eslint:recommended", 'plugin:node/recommended'],
+    "parser": "babel-eslint",
+    "extends": ["eslint:recommended", 'plugin:node/recommended'],
     "overrides": [
         {
             "env": {
@@ -22,5 +23,6 @@ module.exports = {
         "ecmaVersion": "latest"
     },
     "rules": {
+        'import/extensions': ['error', 'always', { js: 'never' }],
     }
 }

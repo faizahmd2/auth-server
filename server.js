@@ -1,22 +1,17 @@
-const path = require('path');
-const passport = require('passport');
-// const rootDir = path.normalize(__dirname + '/..');
-let config = require('./config/config');
-const loadRoutes = require('./app/utils/routeLoader')
+import passport from 'passport';
+import app from './connection/express.js';
+import routesBackend from './routesBackend.js';
 
-const app = require('./connection/express');
-const logger = require('./app/utils/logger');
-
-//passport
+// passport
 app.use(passport.initialize());
-require('./connection/passport')
+import './connection/passport.js';
 
 // connect mongoose
-require('./connection/db');
+import './connection/db.js';
+import routesClient from './routesClient.js';
 
-const PORT = config.PORT || 2460
+// Backend routes
+routesBackend(app);
 
-loadRoutes(app, path.join(__dirname, 'app/routes'));
-
-app.listen(PORT, () => logger.info(`Express app is listening on PORT ${PORT}`));
-
+// Next app client route configure
+routesClient(app);

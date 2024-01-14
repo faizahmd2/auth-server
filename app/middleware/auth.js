@@ -1,25 +1,20 @@
-const jwt = require('jsonwebtoken');
-const logger = require('../utils/logger');
+import { verifyJwt } from './verifyJWT.js';
 
 var auth = {
     validateToken: async function (req, res, next) {
         const token = req.cookies.token;
-        let result;
 
         if (!token) return res.status(401).json({ status: 0, message: "Cookies missing in request made" });
 
-        const options = {
-            expiresIn: process.env.JWT_EXPIRY,
-        };
-
         try {
-            result = jwt.verify(token, process.env.JWT_SECRET, options);
 
-            req.decoded = result;
+            let result = verifyJwt(token);
+
+            req.user = result;
 
             next();
         } catch (error) {
-            logger.error("catche error auth token valiation:",error);
+            console.log("catche error auth token valiation:",error);
 
             if (error.name === "TokenExpiredError") {
                 return res.status(403).json({
@@ -33,7 +28,23 @@ var auth = {
                 message: "Authentication error",
             });
         }
+    },
+    nextRequestToken: async function(req, res, next) {
+        try {
+            const token = req.cookies.token;
+        
+            if (!token) {
+              return res.redirect('/login');
+            }
+            const decoded = verifyJwt(token);
+        
+            req.user = decoded;
+            next()
+        } catch (error) {
+            console.error('JWT Verification Error:', error);
+            return res.redirect('/login');
+        }
     }
 }
 
-module.exports = auth
+export default auth

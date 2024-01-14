@@ -1,9 +1,12 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const googleConf = require('../config/config').get('oauth_google');
-const { PROVIDER_LOGIN_CALLBACK_URL } = require('../app/utils/constants');
-const userUtil = require('../app/utils/userUtils');
-const logger = require('../app/utils/logger');
+import passport from 'passport';
+// import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import strategy from 'passport-google-oauth20';
+import config from '../config/config.js';
+import { PROVIDER_LOGIN_CALLBACK_URL } from '../app/utils/constants.js';
+import userUtil from '../app/utils/userUtils.js';
+import logger from '../app/utils/logger.js';
+const googleConf = config.get('oauth_google');
+const GoogleStrategy = strategy.Strategy;
 
 passport.use(new GoogleStrategy({
     clientID: googleConf.client_id,
@@ -11,6 +14,7 @@ passport.use(new GoogleStrategy({
     callbackURL: PROVIDER_LOGIN_CALLBACK_URL + 'google',
     scope: [ 'profile', 'email' ]
   }, async function verify(issuer, profile, user, next) {
+    console.log("user===",user)
     if(!user || !user.id) return next("Google Auth Fail");
 
     let email = user.emails && user.emails[0] && user.emails[0].value; 
@@ -25,4 +29,4 @@ passport.use(new GoogleStrategy({
     next(null, userInf);
 }));
 
-module.exports = passport;
+export default passport;

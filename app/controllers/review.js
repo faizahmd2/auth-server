@@ -1,7 +1,7 @@
-const Review = require('../models/review')
-const { serverError } = require('../utils/constants')
-const logger = require('../utils/logger')
-const util = require('../utils/utils')
+import Review from '../models/review.js'
+import { serverError } from '../utils/constants.js'
+import logger from '../utils/logger.js'
+import utils from '../utils/utils.js'
 
 var controller = {
     addBookReviews: async function(req, res) {
@@ -10,7 +10,7 @@ var controller = {
             let { email } = req.decode
 
             if(!bookId || !rating) return res.json({status: 0, message: "Parameters Missing"});
-            if(!util.isValidObjectId(bookId)) return res.json({status: 0, message: "Invalid Book Id"});
+            if(!utils.isValidObjectId(bookId)) return res.json({status: 0, message: "Invalid Book Id"});
             
             const review = new Review({ book: bookId, user: email, reviewText, rating, created: Date.now(), status: 1});
             await review.save()
@@ -24,7 +24,7 @@ var controller = {
         try {
             let bookId = req.params.bookId
 
-            if(!util.isValidObjectId(bookId)) throw { message: "Invalid Book Id" }
+            if(!isValidObjectId(bookId)) throw { message: "Invalid Book Id" }
             
             let reviews = await Review.find({ book: bookId })
             return res.json({status: 1, reviews});
@@ -35,4 +35,4 @@ var controller = {
     }
 }
 
-module.exports = controller
+export default controller

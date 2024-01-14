@@ -1,5 +1,5 @@
-const mongoose = require('../../connection/db')
-const Schema = mongoose.Schema;
+import db from '../../connection/db.js';
+const Schema = db.Schema;
 
 const bookSchema = new Schema({
     title: String,
@@ -10,6 +10,6 @@ const bookSchema = new Schema({
     modified: { type: Date, default: Date.now }
 });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = db.model('Book', bookSchema);
 
-module.exports = Book;
+export default Book;

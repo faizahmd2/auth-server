@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
-const logger = require('../app/utils/logger');
-let mongo_uri = require('../config/config').get('mongo_uri');
+import mongoose from 'mongoose';
+import logger from '../app/utils/logger.js';
+import config from '../config/config.js';
+let mongo_uri = config.get('mongo_uri');
 
 mongoose.connect(mongo_uri, {
   useNewUrlParser: true,
@@ -17,4 +18,4 @@ db.once('open', () => {
   logger.info('Connected to MongoDB');
 });
 
-module.exports = mongoose;
+export default mongoose;

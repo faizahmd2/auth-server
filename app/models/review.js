@@ -1,5 +1,5 @@
-const mongoose = require('../../connection/db')
-const Schema = mongoose.Schema;
+import db from '../../connection/db.js';
+const Schema = db.Schema;
 
 const reviewSchema = new Schema({
     book: Schema.Types.ObjectId,
@@ -11,6 +11,6 @@ const reviewSchema = new Schema({
     modified: { type: Date, default: Date.now }
 });
 
-const Review = mongoose.model('Review', reviewSchema);
+const Review = db.model('Review', reviewSchema);
 
-module.exports = Review;
+export default Review;

@@ -1,6 +1,6 @@
-const Book = require('../models/book');
-const logger = require('../utils/logger');
-const { serverError } = require('../utils/constants');
+import Book from '../models/book.js';
+import logger from '../utils/logger.js';
+import { serverError } from '../utils/constants.js';
 
 var controller = {
     searchBooks: async function(req, res) {
@@ -64,4 +64,4 @@ var controller = {
     }
 }
 
-module.exports = controller
+export default controller
