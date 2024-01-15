@@ -36,29 +36,29 @@ const Login = () => {
 
           {register && <div className="form-outline mb-3">
             <input type="text" id="registerName" className="form-control" />
-            <label className="form-label" for="registerName">Username</label>
+            <label className="form-label" htmlFor="registerName">Username</label>
           </div>}
 
           <div className="form-outline mb-3">
             <input type="email" id="loginName" className="form-control" />
-            <label className="form-label" for="loginName">Email</label>
+            <label className="form-label" htmlFor="loginName">Email</label>
           </div>
 
           <div className="form-outline mb-3">
             <input type="password" id="loginPassword" className="form-control" />
-            <label className="form-label" for="loginPassword">Password</label>
+            <label className="form-label" htmlFor="loginPassword">Password</label>
           </div>
 
           {register && <div className="form-outline mb-3">
             <input type="password" id="confirmPassword" className="form-control" />
-            <label className="form-label" for="confirmPassword">Confirm Password</label>
+            <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
           </div>}
 
           {!register && <div className="row mb-3" style={{fontSize: '.94em'}}>
             <div className="col-6 d-flex justify-content-center">
               <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="loginCheck" checked />
-                <label className="form-check-label" for="loginCheck"> Remember me </label>
+                <label className="form-check-label" htmlFor="loginCheck"> Remember me </label>
               </div>
             </div>
 
