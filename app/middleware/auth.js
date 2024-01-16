@@ -28,22 +28,6 @@ var auth = {
                 message: "Authentication error",
             });
         }
-    },
-    nextRequestToken: async function(req, res, next) {
-        try {
-            const token = req.cookies.token;
-        
-            if (!token) {
-              return res.redirect('/login');
-            }
-            const decoded = verifyJwt(token);
-        
-            req.user = decoded;
-            next()
-        } catch (error) {
-            console.error('JWT Verification Error:', error);
-            return res.redirect('/login');
-        }
     }
 }
 

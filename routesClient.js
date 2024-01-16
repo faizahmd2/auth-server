@@ -1,7 +1,6 @@
 import next from 'next';
 import config from './config/config.js';
 import logger from './app/utils/logger.js';
-import auth from './app/middleware/auth.js';
 
 const dev = config.get('NODE_ENV') !== 'production';
 const nextApp = next({ dev });
@@ -11,10 +10,6 @@ const PORT = config.get('PORT') || 2460
 
 const nextRouter = (app) => {
     nextApp.prepare().then(() => {
-        app.all('/books', auth.nextRequestToken, async (req, res) => {
-            return handle(req, res);
-        });
-
         app.all('*', async (req, res) => {
             return handle(req, res);
         });

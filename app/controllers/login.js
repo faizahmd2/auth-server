@@ -78,7 +78,6 @@ var controller = {
     loginUserCallbackWithProvider: async function(req, res, next) {
         try {
             let provider = req.params.provider;
-            console.log("HERE",provider)
             if(!provider) throw new Error("Unknown provider in loginUserCallbackWithProvider " + provider);
     
             passport.authenticate(provider, { failureRedirect: '/login', successRedirect: '/' }, async (err, user) => {
@@ -97,15 +96,17 @@ var controller = {
                     res.cookie('token', token, { maxAge: 3600000, httpOnly: true });
         
                     // return res.json({status: 1, message: 'Logged In Successfully', token});
-                    return res.redirect("/home");
+                    logger.info("PROVIDER CALLBACK LOGIN SUCCESS REDIRECTING:::")
+                    return res.redirect("/books");
                 } catch (error) {
                     logger.error("CATCHE login callback: ",error);
-                    return res.status(500).json({ status: 0, error: serverError });
+                    // return res.status(500).json({ status: 0, error: serverError });
+                    return res.redirect('/login');
                 }
             })(req, res, next);
         } catch (error) {
             logger.error("catched error login callback",error);
-            return res.status(500).json({ status: 0, error: serverError });
+            return res.redirect('/login');
         }
     }
 }

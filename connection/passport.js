@@ -14,7 +14,6 @@ passport.use(new GoogleStrategy({
     callbackURL: PROVIDER_LOGIN_CALLBACK_URL + 'google',
     scope: [ 'profile', 'email' ]
   }, async function verify(issuer, profile, user, next) {
-    console.log("user===",user)
     if(!user || !user.id) return next("Google Auth Fail");
 
     let email = user.emails && user.emails[0] && user.emails[0].value; 

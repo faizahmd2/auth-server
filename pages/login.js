@@ -1,9 +1,19 @@
 
 import { useState } from 'react';
 import '../styles/Login.css'
+import Link from 'next/link'
 
 const Login = () => {
   const [register, setRegister] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState("");
+
+  const handleProviderLogin = async (provider) => { 
+    setError("Kindly login by other method");
+    setTimeout(() => {
+      setError("")
+    }, 3000)
+  }
 
   return (
   <div className="main_login_container">
@@ -16,19 +26,21 @@ const Login = () => {
         <form>
           {!register && <div className="text-center mb-2">
             <div className="fw-bold">Sign in with:</div>
-            <button title='facebook' type="button" className="btn btn-link btn-floating mx-1">
+            <button onClick={() => handleProviderLogin('facebook')} title='facebook' type="button" className="btn btn-link btn-floating mx-1">
               <i className="fab fa-facebook-f fs-5"></i>
             </button>
 
-            <button title='google' type="button" className="btn btn-link btn-floating mx-1">
-              <i className="fab fa-google fs-5"></i>
-            </button>
+            <Link href="/api/provider/login/google">
+              <button title='google' type="button" className="btn btn-link btn-floating mx-1">
+                <i className="fab fa-google fs-5"></i>
+              </button>
+            </Link>
 
-            <button title='twitter' type="button" className="btn btn-link btn-floating mx-1">
+            <button onClick={() => handleProviderLogin('twitter')} title='twitter' type="button" className="btn btn-link btn-floating mx-1">
               <i className="fab fa-twitter fs-5"></i>
             </button>
 
-            <button title='github' type="button" className="btn btn-link btn-floating mx-1">
+            <button onClick={() => handleProviderLogin('github')} title='github' type="button" className="btn btn-link btn-floating mx-1">
               <i className="fab fa-github fs-5"></i>
             </button>
           </div>}
@@ -44,15 +56,16 @@ const Login = () => {
             <label className="form-label" htmlFor="loginName">Email</label>
           </div>
 
-          <div className="form-outline mb-3">
+          <div className="form-outline mb-1">
             <input type="password" id="loginPassword" className="form-control" />
             <label className="form-label" htmlFor="loginPassword">Password</label>
           </div>
 
-          {register && <div className="form-outline mb-3">
+          {register && <div className="form-outline mb-1">
             <input type="password" id="confirmPassword" className="form-control" />
             <label className="form-label" htmlFor="confirmPassword">Confirm Password</label>
           </div>}
+          {error && <div className='mb-2 text-center text-danger'>*{error}</div>}
 
           {!register && <div className="row mb-3" style={{fontSize: '.94em'}}>
             <div className="col-6 d-flex justify-content-center">

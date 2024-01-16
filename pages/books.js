@@ -1,6 +1,19 @@
 import { useState, useEffect } from "react";
 import styles from '../styles/Home.module.css'
 import BookCard from "../components/books/BookCard";
+import { authenticate } from "../utils/auth";
+
+export async function getServerSideProps(context) {
+    const authResult = await authenticate(context);
+
+    if ('redirect' in authResult) {
+      return authResult;
+    }
+
+    return {
+      props: authResult.props,
+    };
+}
 
 const fetchBook = async (query) => {
     let q = "/api/books/search";
@@ -14,7 +27,7 @@ const fetchBook = async (query) => {
 
 const PageHandle = ({text}) => <h1 style={{textAlign: 'center', color: '#000'}}>{text}</h1>
 
-const Books = () => {
+const Books = ({user}) => {
     const [query, setQuery] = useState("");
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
