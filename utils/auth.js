@@ -6,6 +6,7 @@ export const authenticate = async (context) => {
   const token = req.cookies.token;
   let isAuthenticated = false;
   let user;
+  console.log("AUth Called", token)
 
   if (token) {
     try {
@@ -16,6 +17,7 @@ export const authenticate = async (context) => {
       let result = jwt.verify(token, config.get('JWT_SECRET'), options);
 
       user = result;
+      console.log("USER:",user)
       isAuthenticated = true;
 
     } catch (error) {

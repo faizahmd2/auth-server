@@ -40,7 +40,7 @@ const Books = ({user}) => {
     };
 
     useEffect(() => {
-        return handleSearch;
+        handleSearch();
     }, [])
 
     return <div className={styles['home-containes']}>
@@ -52,6 +52,7 @@ const Books = ({user}) => {
                 onChange={(event) => setQuery(event.target.value)}
                 className="form-control"
                 style={{width: '25%'}}
+                onKeyDown={(e) => e.code == "Enter" && handleSearch()}
             />
             <button className="btn btn-primary" onClick={handleSearch}>Search</button>
 
